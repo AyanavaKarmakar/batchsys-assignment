@@ -1,8 +1,18 @@
 import Head from "next/head";
 import { type Product } from "../utils/ProductSchema";
 import { ProductCard1, ProductCard2 } from "../components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
+
+// handle pagination
+const itemsPerPage = 10;
+const fetchProducts = async (offset: number, limit: number) => {
+  const response = await fetch(
+    `https://dummyjson.com/products?skip=${offset}&limit=${limit}`
+  );
+  const data = await response.json();
+  return data.products || [];
+};
 
 export default function Products({ products }: { products: Product[] }) {
   const [isHorizontal, setIsHorizontal] = useState(false);
@@ -14,6 +24,25 @@ export default function Products({ products }: { products: Product[] }) {
 
   const toggleCardType = () => {
     setIsCard1(!isCard1);
+  };
+
+  const [productList, setProductList] = useState(products);
+  const [page, setPage] = useState(0);
+
+  // handle pagination
+  useEffect(() => {
+    (async () => {
+      const newProducts = await fetchProducts(
+        page * itemsPerPage,
+        itemsPerPage
+      );
+
+      setProductList((prevProducts) => [...prevProducts, ...newProducts]);
+    })();
+  }, [page]);
+
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
   };
 
   return (
@@ -49,7 +78,7 @@ export default function Products({ products }: { products: Product[] }) {
                   : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
               )}
             >
-              {products?.map((product) => (
+              {productList?.map((product) => (
                 <div key={product.id} className="flex-shrink-0">
                   <ProductCard1 product={product} />
                 </div>
@@ -65,7 +94,7 @@ export default function Products({ products }: { products: Product[] }) {
                   : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
               )}
             >
-              {products?.map((product) => (
+              {productList?.map((product) => (
                 <div key={product.id} className="flex-shrink-0">
                   <ProductCard2 product={product} />
                 </div>
@@ -73,6 +102,13 @@ export default function Products({ products }: { products: Product[] }) {
             </div>
           </div>
         )}
+
+        <button
+          onClick={handleLoadMore}
+          className="bg-primary-light dark:bg-primary-dark my-5 p-2 rounded-md text-lg font-semibold dark:border-none border-2 border-solid border-black"
+        >
+          Load More
+        </button>
       </main>
     </>
   );
@@ -80,13 +116,10 @@ export default function Products({ products }: { products: Product[] }) {
 
 export async function getServerSideProps() {
   try {
-    const res = await fetch("https://dummyjson.com/products");
-    const data = await res.json();
+    const initialProducts = await fetchProducts(0, itemsPerPage);
 
     // Ensure that the data is an array of products
-    const products: Product[] = Array.isArray(data.products)
-      ? data.products
-      : [];
+    const products = Array.isArray(initialProducts) ? initialProducts : [];
 
     return { props: { products } };
   } catch (error) {
