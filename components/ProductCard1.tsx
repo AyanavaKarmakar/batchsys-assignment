@@ -16,7 +16,7 @@ export const ProductCard1 = ({ product }: { product: Product }) => {
             height={500}
           />
           <span className="cursor-pointer bg-white border-2 border-solid border-black p-1.5 absolute top-3 right-3 rounded-full">
-            <HeartIcon className="w-4 h-4" />
+            <HeartIcon className="w-4 h-4 text-black" />
           </span>
         </div>
 
