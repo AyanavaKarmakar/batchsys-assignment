@@ -11,7 +11,7 @@ export default function Products() {
       </Head>
 
       <main className="flex flex-col gap-3 items-center justify-center min-h-screen">
-        <h1 className="text-3xl font-semibold text-center">Products</h1>
+        <h1 className="text-6xl font-bold text-center">Products</h1>
       </main>
     </>
   );
