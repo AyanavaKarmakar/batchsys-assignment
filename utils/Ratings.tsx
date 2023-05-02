@@ -8,7 +8,7 @@ const Star = ({ isFilled }: { isFilled: boolean }) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-6 h-6 text-primary-light dark:text-primary-dark"
+      className="w-6 h-6"
     >
       <path
         strokeLinecap="round"

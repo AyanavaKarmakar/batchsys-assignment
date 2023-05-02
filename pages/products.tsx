@@ -1,8 +1,16 @@
 import Head from "next/head";
 import { type Product } from "../utils/ProductSchema";
 import { ProductCard1, ProductCard2 } from "../components";
+import { useState } from "react";
+import clsx from "clsx";
 
 export default function Products({ products }: { products: Product[] }) {
+  const [isHorizontal, setIsHorizontal] = useState(false);
+
+  const toggleScrollDirection = () => {
+    setIsHorizontal(!isHorizontal);
+  };
+
   return (
     <>
       <Head>
@@ -12,11 +20,31 @@ export default function Products({ products }: { products: Product[] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col gap-3 items-center justify-center min-h-screen">
-        <h1 className="text-6xl font-bold text-center">Products</h1>
-
+      <main className="flex flex-col gap-3 items-center justify-start min-h-screen">
         <ProductCard1 product={products[0]} />
-        <ProductCard2 product={products[0]} />
+
+        <button
+          onClick={toggleScrollDirection}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+        >
+          Toggle Scroll Direction
+        </button>
+
+        <div className="p-4">
+          <div
+            className={clsx(
+              isHorizontal
+                ? "flex overflow-x-scroll gap-3"
+                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+            )}
+          >
+            {products?.map((product) => (
+              <div key={product.id}>
+                <ProductCard2 product={product} />
+              </div>
+            ))}
+          </div>
+        </div>
       </main>
     </>
   );
