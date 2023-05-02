@@ -37,15 +37,19 @@ export default function Controls() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col gap-5 items-center justify-center min-h-screen">
-        <h1 className="text-6xl font-bold text-center">Controls</h1>
+      <main className="flex flex-col gap-3 lg:gap-5 items-center justify-center min-h-screen">
+        <h1 className="text-3xl lg:text-6xl font-bold text-center lg:my-0 my-3">
+          Controls
+        </h1>
 
-        <div className="max-w-md w-auto">
+        <div className="lg:mx-0 mx-10 max-w-lg w-auto">
           <div className="flex flex-row items-center gap-3 my-5">
-            <div className="text-2xl font-bold">1. Change Card Type:</div>
+            <div className="text-lg lg:text-2xl font-bold">
+              1. Change Card Type:
+            </div>
             <button
               type="button"
-              className="bg-primary-light dark:bg-primary-dark p-3 rounded-md w-20"
+              className="bg-primary-light dark:bg-primary-dark p-3 rounded-md w-20 text-base lg:text-lg font-semibold"
               onClick={() => {
                 setCardType(cardType === "Card1" ? "Card2" : "Card1");
               }}
@@ -55,12 +59,12 @@ export default function Controls() {
           </div>
 
           <div className="flex flex-row items-center gap-3 my-5">
-            <div className="text-2xl font-bold">
+            <div className="text-lg lg:text-2xl font-bold">
               2. Change Scroll Direction:
             </div>
             <button
               type="button"
-              className="bg-primary-light dark:bg-primary-dark p-3 rounded-md w-24"
+              className="bg-primary-light dark:bg-primary-dark p-3 rounded-md text-base lg:text-lg font-semibold w-32"
               onClick={() => {
                 setScrollType(
                   scrollType === "Vertical" ? "Horizontal" : "Vertical"
@@ -72,7 +76,9 @@ export default function Controls() {
           </div>
 
           <div className="flex flex-row items-center gap-3 my-5">
-            <div className="text-2xl font-bold">3. Toggle Theme:</div>
+            <div className="text-lg lg:text-2xl font-bold">
+              3. Toggle Theme:
+            </div>
 
             <button
               type="button"

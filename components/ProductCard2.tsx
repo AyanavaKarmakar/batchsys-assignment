@@ -6,7 +6,7 @@ export const ProductCard2 = ({ product }: { product: Product }) => {
   return (
     <div className="flex flex-col gap-3 items-start justify-center m-5">
       <Image
-        className="rounded-lg h-80 w-96 object-cover"
+        className="rounded-lg h-72 lg:h-80 w-80 lg:w-96 object-cover"
         src={
           product.thumbnail
             ? product.thumbnail

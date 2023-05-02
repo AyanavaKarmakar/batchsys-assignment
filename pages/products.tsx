@@ -2,6 +2,8 @@ import Head from "next/head";
 import { type Product } from "../utils/ProductSchema";
 import { ProductCard1, ProductCard2 } from "../components";
 import { useEffect, useState } from "react";
+import { useCardTypeStore } from "../store/cardTypeStore";
+import { useScrollTypeStore } from "../store/scrollTypeStore";
 import clsx from "clsx";
 
 // handle pagination
@@ -15,19 +17,10 @@ const fetchProducts = async (offset: number, limit: number) => {
 };
 
 export default function Products({ products }: { products: Product[] }) {
-  const [isHorizontal, setIsHorizontal] = useState(false);
-  const [isCard1, setIsCard1] = useState(true);
-
-  const toggleScrollDirection = () => {
-    setIsHorizontal(!isHorizontal);
-  };
-
-  const toggleCardType = () => {
-    setIsCard1(!isCard1);
-  };
-
   const [productList, setProductList] = useState(products);
   const [page, setPage] = useState(0);
+  const cardType = useCardTypeStore((state) => state.cardType);
+  const scrollType = useScrollTypeStore((state) => state.scrollType);
 
   // handle pagination
   useEffect(() => {
@@ -54,32 +47,18 @@ export default function Products({ products }: { products: Product[] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col gap-3 items-center justify-center ">
-        <button
-          onClick={toggleScrollDirection}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-        >
-          Toggle Scroll Direction
-        </button>
-
-        <button
-          onClick={toggleCardType}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-        >
-          Toggle Card Type
-        </button>
-
-        {isCard1 ? (
+      <main className="flex flex-col gap-3 items-center justify-center min-h-screen">
+        {cardType === "Card1" ? (
           <div className="p-4">
             <div
               className={clsx(
-                isHorizontal
+                scrollType === "Horizontal"
                   ? "flex overflow-x-scroll gap-3 w-screen"
                   : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
               )}
             >
-              {productList?.map((product) => (
-                <div key={product.id} className="flex-shrink-0">
+              {productList?.map((product, index) => (
+                <div key={index} className="flex-shrink-0">
                   <ProductCard1 product={product} />
                 </div>
               ))}
@@ -89,13 +68,13 @@ export default function Products({ products }: { products: Product[] }) {
           <div className="p-4">
             <div
               className={clsx(
-                isHorizontal
+                scrollType === "Horizontal"
                   ? "flex overflow-x-scroll gap-3 w-screen"
                   : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
               )}
             >
-              {productList?.map((product) => (
-                <div key={product.id} className="flex-shrink-0">
+              {productList?.map((product, index) => (
+                <div key={index} className="flex-shrink-0">
                   <ProductCard2 product={product} />
                 </div>
               ))}
