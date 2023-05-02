@@ -25,7 +25,7 @@ export const ProductCard1 = ({ product }: { product: Product }) => {
 
           {product.discountPercentage > 0 ? (
             <div className="font-bold text-base">
-              <span className="line-through text-gray-500">
+              <span className="line-through text-gray-500 dark:text-gray-400">
                 ${product.price.toFixed(2)}
               </span>
               <span className="ml-2">
