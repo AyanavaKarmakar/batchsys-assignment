@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { type Product } from "../utils/ProductSchema";
+import { ProductCard1, ProductCard2 } from "../components";
 
 export default function Products({ products }: { products: Product[] }) {
   return (
@@ -13,6 +14,9 @@ export default function Products({ products }: { products: Product[] }) {
 
       <main className="flex flex-col gap-3 items-center justify-center min-h-screen">
         <h1 className="text-6xl font-bold text-center">Products</h1>
+
+        <ProductCard1 product={products[0]} />
+        <ProductCard2 product={products[0]} />
       </main>
     </>
   );
