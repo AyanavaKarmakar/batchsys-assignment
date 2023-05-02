@@ -1,6 +1,7 @@
 import Head from "next/head";
+import { type Product } from "../utils/ProductSchema";
 
-export default function Products() {
+export default function Products({ products }: { products: Product[] }) {
   return (
     <>
       <Head>
@@ -15,4 +16,21 @@ export default function Products() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  try {
+    const res = await fetch("https://dummyjson.com/products");
+    const data = await res.json();
+
+    // Ensure that the data is an array of products
+    const products: Product[] = Array.isArray(data.products)
+      ? data.products
+      : [];
+
+    return { props: { products } };
+  } catch (error) {
+    console.error(error);
+    return { props: { products: [] } };
+  }
 }
