@@ -10,7 +10,13 @@ export const ProductCard1 = ({ product }: { product: Product }) => {
         <div className="relative">
           <Image
             className="rounded-lg h-44 w-72 object-cover"
-            src={product.thumbnail}
+            src={
+              product.thumbnail
+                ? product.thumbnail
+                : product.images[0]
+                ? product.images[0]
+                : "https://i.dummyjson.com/data/products/1/4.jpg"
+            }
             alt={product.title}
             width={500}
             height={500}

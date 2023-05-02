@@ -7,7 +7,13 @@ export const ProductCard2 = ({ product }: { product: Product }) => {
     <div className="flex flex-col gap-3 items-start justify-center m-5">
       <Image
         className="rounded-lg h-80 w-96 object-cover"
-        src={product.thumbnail}
+        src={
+          product.thumbnail
+            ? product.thumbnail
+            : product.images[0]
+            ? product.images[0]
+            : "https://i.dummyjson.com/data/products/1/4.jpg"
+        }
         alt={product.title}
         width={400}
         height={400}
