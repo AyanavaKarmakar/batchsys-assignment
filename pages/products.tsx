@@ -6,7 +6,7 @@ import clsx from "clsx";
 
 export default function Products({ products }: { products: Product[] }) {
   const [isHorizontal, setIsHorizontal] = useState(true);
-  const [isCard1, setIsCard1] = useState(true);
+  const [isCard1, setIsCard1] = useState(false);
 
   const toggleScrollDirection = () => {
     setIsHorizontal(!isHorizontal);
