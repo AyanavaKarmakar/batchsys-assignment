@@ -1,6 +1,18 @@
 import Head from "next/head";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  /**
+   * Prevents Next.js hydration mismatch error
+   * @see https://github.com/pacocoursey/next-themes#avoid-hydration-mismatch
+   */
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   return (
     <>
       <Head>
@@ -11,9 +23,16 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className="text-black text-3xl font-semibold text-center">
+        <h1 className="text-light-theme font-sans dark:font-serif dark:text-dark-theme text-3xl font-semibold text-center">
           Hello World
         </h1>
+        <button
+          type="button"
+          className="bg-primary-light dark:bg-primary-dark"
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        >
+          {theme}
+        </button>
       </main>
     </>
   );
