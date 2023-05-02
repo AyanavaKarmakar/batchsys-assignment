@@ -22,8 +22,8 @@ module.exports = {
         'dark-theme': '#F7F7F7',
       },
       colors: {
-        'primary-light': '#3b82f6',
-        'primary-dark': '#93c5fd',
+        'primary-light': '#99f6e4',
+        'primary-dark': '#3b82f6',
       },
     },
   },
