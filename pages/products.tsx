@@ -6,6 +6,7 @@ import clsx from "clsx";
 
 export default function Products({ products }: { products: Product[] }) {
   const [isHorizontal, setIsHorizontal] = useState(false);
+  const [isCard1, setIsCard1] = useState(false);
 
   const toggleScrollDirection = () => {
     setIsHorizontal(!isHorizontal);
@@ -20,8 +21,8 @@ export default function Products({ products }: { products: Product[] }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col gap-3 items-center justify-start min-h-screen">
-        <ProductCard1 product={products[0]} />
+      <main className="flex flex-col gap-3 items-center justify-center ">
+        {/* <ProductCard1 product={products[0]} /> */}
 
         <button
           onClick={toggleScrollDirection}
@@ -30,21 +31,23 @@ export default function Products({ products }: { products: Product[] }) {
           Toggle Scroll Direction
         </button>
 
-        <div className="p-4">
-          <div
-            className={clsx(
-              isHorizontal
-                ? "flex overflow-x-scroll gap-3"
-                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-            )}
-          >
-            {products?.map((product) => (
-              <div key={product.id}>
-                <ProductCard2 product={product} />
-              </div>
-            ))}
+        {!isCard1 && (
+          <div className="p-4">
+            <div
+              className={clsx(
+                isHorizontal
+                  ? "flex overflow-x-scroll gap-3 w-screen"
+                  : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+              )}
+            >
+              {products?.map((product) => (
+                <div key={product.id} className="flex-shrink-0">
+                  <ProductCard2 product={product} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </main>
     </>
   );
