@@ -5,8 +5,8 @@ import { useState } from "react";
 import clsx from "clsx";
 
 export default function Products({ products }: { products: Product[] }) {
-  const [isHorizontal, setIsHorizontal] = useState(false);
-  const [isCard1, setIsCard1] = useState(false);
+  const [isHorizontal, setIsHorizontal] = useState(true);
+  const [isCard1, setIsCard1] = useState(true);
 
   const toggleScrollDirection = () => {
     setIsHorizontal(!isHorizontal);
@@ -22,14 +22,14 @@ export default function Products({ products }: { products: Product[] }) {
       </Head>
 
       <main className="flex flex-col gap-3 items-center justify-center ">
-        {/* <ProductCard1 product={products[0]} /> */}
-
         <button
           onClick={toggleScrollDirection}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
         >
           Toggle Scroll Direction
         </button>
+
+        <ProductCard1 product={products[0]} />
 
         {!isCard1 && (
           <div className="p-4">
