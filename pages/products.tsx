@@ -12,6 +12,10 @@ export default function Products({ products }: { products: Product[] }) {
     setIsHorizontal(!isHorizontal);
   };
 
+  const toggleCardType = () => {
+    setIsCard1(!isCard1);
+  };
+
   return (
     <>
       <Head>
@@ -29,9 +33,30 @@ export default function Products({ products }: { products: Product[] }) {
           Toggle Scroll Direction
         </button>
 
-        <ProductCard1 product={products[0]} />
+        <button
+          onClick={toggleCardType}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
+        >
+          Toggle Card Type
+        </button>
 
-        {!isCard1 && (
+        {isCard1 ? (
+          <div className="p-4">
+            <div
+              className={clsx(
+                isHorizontal
+                  ? "flex overflow-x-scroll gap-3 w-screen"
+                  : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+              )}
+            >
+              {products?.map((product) => (
+                <div key={product.id} className="flex-shrink-0">
+                  <ProductCard1 product={product} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
           <div className="p-4">
             <div
               className={clsx(
