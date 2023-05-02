@@ -2,10 +2,24 @@ import Head from "next/head";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { SunIcon, MoonIcon } from "@radix-ui/react-icons";
+import { useCardTypeStore } from "../store/cardTypeStore";
+import { useScrollTypeStore } from "../store/scrollTypeStore";
 
 export default function Controls() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { cardType, setCardType } = useCardTypeStore((state) => {
+    return {
+      cardType: state.cardType,
+      setCardType: state.setCardType,
+    };
+  });
+  const { scrollType, setScrollType } = useScrollTypeStore((state) => {
+    return {
+      scrollType: state.scrollType,
+      setScrollType: state.setScrollType,
+    };
+  });
 
   /**
    * Prevents Next.js hydration mismatch error
@@ -31,9 +45,12 @@ export default function Controls() {
             <div className="text-2xl font-bold">1. Change Card Type:</div>
             <button
               type="button"
-              className="bg-primary-light dark:bg-primary-dark p-3 rounded-md"
+              className="bg-primary-light dark:bg-primary-dark p-3 rounded-md w-20"
+              onClick={() => {
+                setCardType(cardType === "Card1" ? "Card2" : "Card1");
+              }}
             >
-              Card 1
+              {cardType}
             </button>
           </div>
 
@@ -43,9 +60,14 @@ export default function Controls() {
             </div>
             <button
               type="button"
-              className="bg-primary-light dark:bg-primary-dark p-3 rounded-md"
+              className="bg-primary-light dark:bg-primary-dark p-3 rounded-md w-24"
+              onClick={() => {
+                setScrollType(
+                  scrollType === "Vertical" ? "Horizontal" : "Vertical"
+                );
+              }}
             >
-              Vertical
+              {scrollType}
             </button>
           </div>
 
